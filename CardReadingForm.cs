@@ -15,11 +15,14 @@ namespace AttendanceReadCard
 		private delegate XElement TransformDelegate(XElement content);
 		private ParserDelegate Parser;
 		private TransformDelegate Transformer;
-        public CardReadingForm(CardSetup setup, CardType type)
+        private int _intValue;
+        public CardReadingForm(CardSetup setup, CardType type,int value)
         {
             InitializeComponent();
             CardSetup = setup;
 			Type = type;
+            _intValue = value;
+
 			if (this.Type == CardType.請假卡)
 			{
 				Parser = new ParserDelegate(WVSOMRParser.Instance.LeaveParser);
@@ -67,7 +70,7 @@ namespace AttendanceReadCard
                     if (OMRCardReader.FeedSheet(out data, out error))
                     {
 						//XElement phrase1 = WVSOMRParser.Instance.Parser(data, 35*(int)this.Type);
-						XElement phrase1 = this.Parser.Invoke(data, 3, 35 * (int)this.Type);
+						XElement phrase1 = this.Parser.Invoke(data, _intValue, 35 * (int)this.Type);
 
                         XElement errors;
 						if (!WVSOMRParser.Instance.IsValidated(phrase1, out errors))

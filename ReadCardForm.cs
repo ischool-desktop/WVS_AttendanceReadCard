@@ -345,7 +345,7 @@ namespace AttendanceReadCard
 				this.CardType = CardType.請假卡;
 				Setup = new CardSetup();
 
-				CardReadingForm crf = new CardReadingForm(Setup, CardType.請假卡);
+				CardReadingForm crf = new CardReadingForm(Setup, CardType.請假卡,intValue.Value);
 				crf.ShowDialog();
 
 				Clipboard.SetText(crf.XmlResult.ToString());
@@ -441,7 +441,7 @@ namespace AttendanceReadCard
 				this.CardType = CardType.點名卡;
 				Setup = new CardSetup();
 
-				CardReadingForm crf = new CardReadingForm(Setup, CardType.點名卡);
+                CardReadingForm crf = new CardReadingForm(Setup, CardType.點名卡, intValue.Value);
 				crf.ShowDialog();
 
 				Clipboard.SetText(crf.XmlResult.ToString());
