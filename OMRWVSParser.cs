@@ -90,7 +90,7 @@ namespace AttendanceReadCard
 			public override bool Validate()
 			{
 				int mark_count = 0;
-				int mark_no = 103;
+				int mark_no = Program.StartYear;
 				for (int i = 0; i < this.Position.Count(); i++)
 				{
 					if (this.Source.ElementAt(this.Position.ElementAt(i)) >= this.Level)
@@ -196,7 +196,7 @@ namespace AttendanceReadCard
 					XElement Discipline = new XElement("Discipline", new XAttribute("SeatNo", i + 1));
 					this.Message.Element("Success").Add(Discipline);
 					position = start + 35*i;
-					for (int j = 0; j < 10; j++)
+					for (int j = 0; j <= 10; j++)
 					{
 						int count = 0;
 						for (int k = 0; k < 3; k++)
@@ -275,7 +275,7 @@ namespace AttendanceReadCard
 		private sealed class LeaveAttendanceTypeParser : Decorator
 		{
 			//	節次對照
-			private readonly string[] TypeMappings = new string[] { "事", "病", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節" }; 
+			//private readonly string[] TypeMappings = new string[] { "事", "病", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節", "第九節"}; 
 			//	請假卡「假別」之畫記的絕對位置
 			private readonly List<int> Position = new List<int> { 7, 77, 147, 217, 287 };
 
@@ -293,7 +293,8 @@ namespace AttendanceReadCard
 				}
 				if (mark_count == 1)
 				{
-					this.Message.Element("Success").Add(new XElement("AttendanceType", TypeMappings[mark_no]));
+					//this.Message.Element("Success").Add(new XElement("AttendanceType", TypeMappings[mark_no]));
+                    this.Message.Element("Success").Add(new XElement("AttendanceType", Program.LeaveNameList[mark_no]));
 
 					return base.Validate();
 				}
@@ -338,7 +339,7 @@ namespace AttendanceReadCard
 			private readonly List<int> EndPeriodPosition = new List<int> { 20, 55, 90, 125, 160, 195, 230, 265, 300, 335, 370, 405 };
 
 			//	節次對照
-			private readonly string[] PeriodMappings = new string[] { "早修/升旗", "早修/升旗", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節" }; 
+            private readonly string[] PeriodMappings = new string[] { "早修/升旗", "早修/升旗", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節", "第九節" }; 
 
 			public override bool Validate()
 			{
@@ -368,7 +369,7 @@ namespace AttendanceReadCard
 					if (this.Source.ElementAt(this.BeginYearPosition.ElementAt(i)) >= this.Level)
 					{
 						begin_year_mark_count += 1;
-						begin_year_mark_no = 103 + i;
+						begin_year_mark_no = Program.StartYear + i;
 					}
 					//	請假日期--月(自)
 					if (this.Source.ElementAt(this.BeginMonthPosition.ElementAt(i)) >= this.Level)
@@ -380,7 +381,7 @@ namespace AttendanceReadCard
 					if (this.Source.ElementAt(this.EndYearPosition.ElementAt(i)) >= this.Level)
 					{
 						end_year_mark_count += 1;
-						end_year_mark_no = 103 + i;
+                        end_year_mark_no = Program.StartYear + i;
 					}
 					//	請假日期--月(至)
 					if (this.Source.ElementAt(this.EndMonthPosition.ElementAt(i)) >= this.Level)
@@ -389,7 +390,7 @@ namespace AttendanceReadCard
 						end_month_mark_no = 1 + i;
 					}
 				}
-				for (int i = 0; i < 11; i++)
+				for (int i = 0; i <= 11; i++)
 				{
 					//	請假日期--節(自)
 					if (this.Source.ElementAt(this.BeginPeriodPosition.ElementAt(i)) >= this.Level)
@@ -568,7 +569,7 @@ namespace AttendanceReadCard
 			if (source.Length != source_length)
 				throw new ArgumentException("卡片格式不正確，請確認卡片為「請假卡」。");
 
-			iParser Parser = new ConcreteParser();			
+			iParser Parser = new ConcreteParser();	
 			
 			//	學號
 			Decorator Decorator = new LeaveStudentNumberParser();

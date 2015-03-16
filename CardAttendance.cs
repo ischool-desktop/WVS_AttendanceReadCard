@@ -16,7 +16,7 @@ namespace AttendanceReadCard
         public CardAttendance(CardType type)
         {
             Periods = new List<string>();
-            Periods.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "" });
+            Periods.AddRange(new string[] { "", "", "", "", "", "", "", "", "", "","" });
 			this.Type = type;
         }
 
@@ -84,5 +84,7 @@ namespace AttendanceReadCard
         public string Period8 { get { return Periods[8]; } }
 
         public string Period9 { get { return Periods[9]; } }
+
+        public string Period10 { get { return Periods[10]; } }
     }
 }
