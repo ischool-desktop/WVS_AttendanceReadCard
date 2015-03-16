@@ -275,7 +275,7 @@ namespace AttendanceReadCard
 		private sealed class LeaveAttendanceTypeParser : Decorator
 		{
 			//	節次對照
-			private readonly string[] TypeMappings = new string[] { "事", "病", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節" }; 
+			//private readonly string[] TypeMappings = new string[] { "事", "病", "第一節", "第二節", "第三節", "第四節", "午休", "第五節", "第六節", "第七節", "第八節" }; 
 			//	請假卡「假別」之畫記的絕對位置
 			private readonly List<int> Position = new List<int> { 7, 77, 147, 217, 287 };
 
@@ -293,7 +293,8 @@ namespace AttendanceReadCard
 				}
 				if (mark_count == 1)
 				{
-					this.Message.Element("Success").Add(new XElement("AttendanceType", TypeMappings[mark_no]));
+					//this.Message.Element("Success").Add(new XElement("AttendanceType", TypeMappings[mark_no]));
+                    this.Message.Element("Success").Add(new XElement("AttendanceType", Program.LeaveNameList[mark_no]));
 
 					return base.Validate();
 				}
